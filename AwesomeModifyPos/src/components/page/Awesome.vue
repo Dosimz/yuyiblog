@@ -12,20 +12,23 @@
 <script>
 import MainHeader from '@/components/common/MainHeader'
 import Midlayout from '@/components/page/Midlayout'
+import Userhome from '@/components/userpage/Userhome'
 import axios from 'axios'
 export default {
   name: 'Awesome',
   components: {
     MainHeader,
     Midlayout,
+    Userhome,
   },
-    mounted(){
-    var _this = this;
-    axios.get('http://127.0.0.1:8000/api/v1/blog').then(function(data){
-    // console.log(data.data);
-    _this.$store.state.allList = data.data;
-    })
-  }
+  //   mounted(){
+  //   var _this = this;
+  //   axios.get('http://127.0.0.1:8000/api/v1/blog').then(function(data){
+  //   // console.log(data.data);
+  //   _this.$store.state.allList = data.data;
+  //   // console.log(_this.$store.state.allList)
+  //   })
+  // }
 }
 </script>
 

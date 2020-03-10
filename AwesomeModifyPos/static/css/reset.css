@@ -88,4 +88,27 @@
    -webkit-text-size-adjust: none;
    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
  }
+
+ .icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+  font-size: 1.6rem;
+  margin-right: 1rem;
+}
+
+html, body, #app {
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+body {
+  background: #304352;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #d7d2cc, #304352);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #d7d2cc, #304352); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */        
+  font-size: 14px;
+  line-height: 2;
+}
+
  

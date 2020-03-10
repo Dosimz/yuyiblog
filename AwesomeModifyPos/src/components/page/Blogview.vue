@@ -27,7 +27,7 @@
                   <span class="el-icon-view hidden-xs-only" style="margin-left: 100px">&nbsp;{{blog.views}}</span>
 
                   <span class="el-icon-chat-line-square hidden-xs-only" style="margin-left: 100px">&nbsp;评论（开发中...）</span>
-                  <span class="el-icon-user-solid hidden-xs-only" style="margin-left: 150px">&nbsp;{{blog.author.name}}</span>
+                  <span class="el-icon-user-solid hidden-xs-only" style="margin-left: 150px">&nbsp;{{author}}</span>
                 </p>
                 <!-- <p>
                   <span>
@@ -39,7 +39,8 @@
               </div>
 
 
-              <mavon-editor v-model="body" id="editor" :toolbarsFlag="false" :subfield="false" defaultOpen="preview"></mavon-editor>
+              <!-- <mavon-editor v-model="body" id="editor" :toolbarsFlag="false" :subfield="false" defaultOpen="preview"></mavon-editor> -->
+              <mavon-editor v-model="body" id="editor" :toolbarsFlag="false" :subfield="false" defaultOpen="preview" />
               <!-- 以下是预览模式配置 -->
               <!-- v-model="body" -->
               <!--:toolbarsFlag="false"  :subfield="false" defaultOpen="preview"-->
@@ -101,13 +102,28 @@
           </aside>
         </div>
       </div>
-    </div>      
+    </div>
+    <div class="article-suspend-panel">
+      <div v-if='hasFavor' @click="deleteheart" class="like-btn panel-btn" >
+        <svg class="icon icon-trans" aria-hidden="true">
+          <use xlink:href="#icon-xihuan2-copy"></use>
+        </svg>已
+      </div>
+      <div v-else @click="addheart" class="like-btn panel-btn" >
+        <svg class="icon icon-trans" aria-hidden="true">
+          <use xlink:href="#icon-xihuan2"></use>
+        </svg>未
+      </div>
+    </div>   
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import user from '@/api/user'
 import { mavonEditor } from 'mavon-editor'
+
+
 
 export default {
   name: "Blogview",
@@ -118,7 +134,9 @@ export default {
     return {
       id: this.$route.params.blogId,
       blog: {},
-      body: ''
+      body: '',
+      author: '',
+      hasFavor: false,
    }
   },
   filters: {
@@ -143,12 +161,35 @@ export default {
     created(){
       let that = this
       axios.get('http://127.0.0.1:8000/api/v1/blog/' + that.id).then(function(data){
-        console.log(data.data.title);
+        // console.log(data.data.title);
         that.blog = data.data
+        that.author = data.data.author.username
         that.body = data.data.body
-      })
+      });
+      if (this.$store.state.token) {
+        user.getFavor(this.id).then(response => {
+          // console.log(response.id)
+            this.hasFavor = true
+        });
+      }
     },
     methods: {
+      deleteheart() {
+        this.hasFavor = false
+        user.delFavor(this.id).then((response)=> {
+        });
+      },
+      addheart() {
+        this.hasFavor = true
+        user.addFavor(this.id).then((response)=> {
+        });
+      },
+      // deleteheart() {
+      //   this.hasFavor = false
+      // },
+      // addheart() {
+      //   this.hasFavor = true
+      // },
       back() {
         history.back()
       }
@@ -168,12 +209,30 @@ h2 {
 
 /* 通用了 Midlayout 和 Yboard 里 style */
 
+.timeline-container {
+  position: relative;
+  margin-top: .33rem;
+}
+
+.view-container {
+  margin-top: 5.6rem;
+}
+
   /* 960px */
 .main-container {
   position: relative;
   margin: 0 auto;
   width: 100%;
   max-width: 1100px;
+}
+
+/* list-view */
+.timeline-list {
+  /* margin-right: 21.667rem; */
+  border-radius: 2px;
+  /* width: 700px; */
+  max-width: 820px;
+  background-color: #fff;
 }
 
 
@@ -184,5 +243,26 @@ h2 {
   right: 0;
   width: 14rem;
   z-index: 1;
+}
+
+.box-card {
+  margin-bottom: 1rem;
+}
+
+
+/* article-suspend-panel */
+.article-suspend-panel {
+  position: fixed;
+  margin-left: 20rem;
+  top: 16rem;
+}
+.panel-btn {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px 0 rgb(0, 0, 0, .04);
+}
+.like-btn {
+  cursor: pointer;
 }
 </style>

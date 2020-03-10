@@ -6,6 +6,11 @@ import Blogview from '@/components/page/Blogview'
 import Editblog from '@/components/common/Editblog'
 import Testview from '@/components/common/Testview'
 import Signreset from '@/components/common/Signreset'
+import Userhome from '@/components/userpage/Userhome'
+import Myarticle from '@/components/userpage/Myarticle'
+import Mylike from '@/components/userpage/Mylike'
+import Myfavors from '@/components/userpage/Myfavors'
+import Myaction from '@/components/userpage/Myaction'
 
 Vue.use(Router)
 
@@ -18,6 +23,7 @@ export default new Router({
       children: [
         {
           path: '/',
+          name: 'Home',
           component: Midlayout
         },
         {
@@ -25,10 +31,38 @@ export default new Router({
           name: 'blog',
           component: Blogview
         },
-        // {
-        //   path: '/',
-        //   component: Awesome
-        // },
+        {
+          path: 'user',
+          // name: 'user',
+          component: Userhome,
+          children:[
+            {
+              path: '/',
+              name: 'userprofile',
+              component: Myarticle
+            },
+            {
+              path: 'articles',
+              name: 'myarticle',
+              component: Myarticle
+            },
+            {
+              path: 'likes',
+              name: 'mylike',
+              component: Mylike
+            },
+            {
+              path: 'favors',
+              name: 'myfavors',
+              component: Myfavors
+            },
+            {
+              path: 'action',
+              name: 'myaction',
+              component: Myaction
+            }
+          ]
+        }
       ]
     },
     {

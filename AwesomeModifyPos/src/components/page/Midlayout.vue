@@ -114,7 +114,7 @@ export default {
   /* margin-right: 21.667rem; */
   border-radius: 2px;
   /* width: 700px; */
-  width: 820px;
+  max-width: 820px;
   background-color: #fff;
 }
 

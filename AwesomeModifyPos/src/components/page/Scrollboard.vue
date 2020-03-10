@@ -21,17 +21,25 @@
                   <li class="meta-item">博文</li>
                   <li class="meta-item"><a href="">{{blog.author.name}}</a></li>
                   <li class="meta-item">{{ blog.modified_time | formatDate }}</li>
-                  <li class="meta-item"><span v-for="(tag, i) in blog.tags" :key="i"><a href="">{{tag.name}}</a></span></li>
+                  <li class="meta-item"><span v-for="(tag, i) in blog.tags" :key="i"><a href="">{{tag}}/</a></span></li>
                 </ul>
               </div>
               <div class="y-title"><a class="y-title_a">{{blog.title}}</a></div>
-              <i class="iconfont icon-ziyuan"></i>
-              <!-- <router-link to="/blog/1">11</router-link> -->
+              <div>
+                <svg class="icon icon-trans" aria-hidden="true">
+                  <use xlink:href="#icon-xihuan2"></use>
+                </svg>
+              </div>
             </div>
         </div>
         </router-link>
         </li>
       </ul>
+      <!-- <ul> 
+        <li v-for="(blog, i) in blogs" :key="i">
+          {{ blog.title }}
+        </li>
+      </ul> -->
   </div>
 
   <!-- <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
@@ -44,7 +52,8 @@ import axios from 'axios'
     data () {
       return {
         search: '',
-        blogs:'',
+        // blogs:'',
+        blogId: '',
       }
     },
     filters: {
@@ -67,9 +76,9 @@ import axios from 'axios'
       if (days >= 1) {
         return days + "天前"
       } else if (hours >= 1) {
-        return hours
+        return hours + "小时前"
       } else if (mins >= 1) {
-        return mins
+        return mins + "分钟前"
       }
      }
     },
@@ -78,7 +87,7 @@ import axios from 'axios'
         // scrollTo(0, 0);
         // console.log(blog)
         this.$router.push({ //路由跳转
-          path: '/blog/' + 1
+          // path: '/blog/' + 1
         });
       },
     },
@@ -89,12 +98,11 @@ import axios from 'axios'
     filteredBlogs:function(){
       return this.$store.state.allList.filter((blog) =>{
         var field = blog.title
-        // console.log(blog.tags[0].name)
-        // return blog.tags[0].name.match(this.search)
-        if (blog.tags[0].name.match(this.search)) {
-          return true
-        }
-        else if (field.toLowerCase().match(this.search)) {
+        // if (blog.tags[0].match(this.search)) {
+        //   return true
+        // }
+        // else
+       if (field.toLowerCase().match(this.search)) {
           return true
         } else if (field.toUpperCase().match(this.search)) {
            return true
@@ -104,19 +112,25 @@ import axios from 'axios'
       })
     }
     },
-    // created(){
+    
+    created(){
     //   let that = this
     //   axios.get('http://127.0.0.1:8000/test/').then(function(data){
     //     console.log(data.data);
     //     that.blogs = data.data
     //   })
-    // }
-    created(){
-      // console.log(this.blogs)
-      // console.log(this.$store.state.allList)
+      // this.articleId = this.$route.params.blogId;
 
-      // this.blogs = this.$store.state.allList
-    }
+    },
+    mounted(){
+    var _this = this;
+    axios.get('http://127.0.0.1:8000/api/v1/blog').then(function(data){
+    // console.log(data.data);
+    _this.$store.state.allList = data.data;
+    // _this.blogs = data.data
+    // console.log(_this.$store.state.allList)
+    });
+  }
   }
 </script>
 
@@ -209,6 +223,10 @@ header {
 
 .meta-item {
   color: #757575;
+}
+
+.icon-trans {
+
 }
 
 

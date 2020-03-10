@@ -9,7 +9,7 @@
         {{'列表内容 ' + o }}
         </div> -->
     </el-card>
-        <el-card class="box-card">
+    <el-card class="box-card">
         <div slot="header" class="clearfix">
         <span>🗂标签集</span>
         <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -18,7 +18,7 @@
         {{'列表内容 ' + o }}
         </div> -->
     </el-card>
-        <el-card class="box-card">
+    <el-card class="box-card">
         <div slot="header" class="clearfix">
         <span>🗂标签集</span>
         <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
