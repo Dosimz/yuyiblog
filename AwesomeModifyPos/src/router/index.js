@@ -11,10 +11,13 @@ import Myarticle from '@/components/userpage/Myarticle'
 import Mylike from '@/components/userpage/Mylike'
 import Myfavors from '@/components/userpage/Myfavors'
 import Myaction from '@/components/userpage/Myaction'
+import Notfound from '@/components/common/Notfound'
+import Bbsview from '@/components/page/Bulletin_board_system'
+import VueRouter from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new VueRouter({
   routes: [
     {
       path: '/',
@@ -33,7 +36,7 @@ export default new Router({
         },
         {
           path: 'user',
-          // name: 'user',
+          // name: 'userinfo',
           component: Userhome,
           children:[
             {
@@ -61,9 +64,14 @@ export default new Router({
               name: 'myaction',
               component: Myaction
             }
-          ]
+          ],
         }
       ]
+    },
+    {
+      path: '/bbs',
+      name: 'bbs',
+      component: Bbsview
     },
     {
       path: '/test',
@@ -78,7 +86,47 @@ export default new Router({
     {
       path: '/edit',
       name: 'edit',
-      component: Editblog
+      component: Editblog,
+      // meta: {
+      //   roles: ['']
+      // }
+    },
+    {
+      path: '/404', 
+      name: 'Notfound',
+      component: Notfound, 
+      // meta: {title:  '页面走丢了'}
+    },      
+    {
+      path: '*', 
+      // name: 'Notfound',
+      // component: Notfound, 
+      redirect: '/404'
+      // meta: {title:  '页面走丢了'}
     },
   ]
 })
+
+
+
+router.beforeEach((to, from, next) => {
+  if (to.name === 'edit') {
+    if (localStorage.getItem('token')) {
+      next();
+    } else {
+      next({ name: 'Notfound' });
+    } 
+  } else {
+    next();
+  };
+  // if (to.path === 'user') {
+  //   if (localStorage.getItem('token')) {
+  //     next();
+  //   } else {
+  //     next({ name: 'Notfound' });
+  //   } 
+  // } else {
+  //   next();
+  // }
+})
+export default router

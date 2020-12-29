@@ -30,28 +30,95 @@ export default {
     return request({
       url: 'user/favors/',
       method: 'post',
-      data: {
-        articles: articleId,
-      }
+      data: qs.stringify({'articles': articleId}),
+      
     })
   },
-  sendMail(mail) {
+  sendMail(email) {
     return request({
-      url: '/user/sendMail',
+      url: '/codes/',
       method: 'post',
       // header: 'Content-Type:application/x-www-form-urlencoded',
-      data: qs.stringify({'mail': mail})
+      data: qs.stringify({'email': email}),
+      // data: {
+      //   email: email,
+      // }
     })
   },
-  register(name, password, mail, mailCode, inviteCode) {
+  register(username, email, mailcode, password,) {
     return request({
-      url: '/user/register',
+      url: '/user/',
       method: 'post',
       // header: 'Content-Type:application/x-www-form-urlencoded',
       data: qs.stringify({
-        'name': name, 'password': password,
-        'mail': mail, 'mailCode': mailCode,
-        'inviteCode': inviteCode
+        'username': username, 
+        'password': password,
+        'email': email,
+        'code': mailcode,
+      })
+      // data: {
+      //   username: username,
+      //   password: password,
+      //   email: email,
+      //   code: mailcode,
+      // }
+    })
+  },
+  // issue(title, body, tags) {
+  //   // tags = tags.toString()
+  //   return request({
+  //     url: '/blogs/',
+  //     method: 'post',
+  //     data: JSON.stringify({
+  //       'title': title,
+  //       'body': body,
+  //       'tags': tags,
+  //     })
+  //   })
+  // },
+  newtag(name){
+    return request({
+      url: '/tags/',
+      method: 'post',
+      data: qs.stringify({
+        'name': name,
+      })
+    })
+  },
+  listreview(){
+    return request({
+      url: '/comments/',
+      method: 'get',
+      // params: {
+      //   blogId: articleId
+      // }
+    })
+  },
+  newreviews(comment_value, articleId){
+    return request({
+      url: '/comments/',
+      method: 'post',
+      data: qs.stringify({
+        'content': comment_value,
+        'article': articleId 
+      })
+    })
+  },
+  retrieuserinfo(){
+    return request({
+      url: '/user/0/',
+      method: 'get',
+    })
+  },
+  updateuserinfo(up_name, up_birth, up_state, up_dsc){
+    return request({
+      url: 'user/0/',
+      method: 'patch',
+      data: qs.stringify({
+        'name': up_name,
+        'birth_date': up_birth,
+        'user_state': up_state,
+        'user_dsc': up_dsc,
       })
     })
   },

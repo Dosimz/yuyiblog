@@ -15,6 +15,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   // alert(store.state.token) //token可以通过此方式拿到
+  // store.state.page_loading = true;
   if (store.state.token != '') {
     config.headers['Authorization'] = 'JWT '+ store.state.token // 让每个请求携带自定义token 请根据实际情况自行修改
   }
@@ -32,6 +33,7 @@ service.interceptors.response.use(
      * code为非200是抛错 可结合自己业务进行修改
      * 如果非200，响应在此被拦截，具体调用代码中无需再判断是否为200
      */
+    // store.state.page_loading = false;
     const res = response.data
 
     if ((typeof (res.code) != "undefined" && res.code != 200) || (typeof (res.status) != "undefined" && res.status != true)) {
@@ -87,18 +89,18 @@ service.interceptors.response.use(
   },
   error => {
     console.log('错误:' + error.message)// for debug
-    var message;
-    if (error.response.status == 504) {
-      message = '连接超时'
-    } else {
-      message = error.message
-    }
+    // var message;
+    // if (error.response.status == 504) {
+    //   message = '连接超时'
+    // } else {
+    //   message = error.message
+    // }
     // Message({
     //   message: message,
     //   type: 'error',
     //   duration: 5 * 1000
     // })
-    return Promise.reject(error)
+    // return Promise.reject(error)
   }
 )
 

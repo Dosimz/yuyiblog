@@ -13,6 +13,7 @@ Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.prototype.$axios = axios
 Vue.use(Vuex)
+// require('../static/js/404.js')
 
 // const store = new Vuex.Store({
 //   state: {

@@ -2,10 +2,18 @@
   <div class="detail-list">
     <div class="list-header">
       <div class="header-content">
-        <router-link :to="'/user/articles'" class="link-item"><div class="link-item-title">文章</div></router-link>
-        <router-link :to="'/user/likes'" class="link-item"><div class="link-item-title">点赞</div></router-link>
-        <router-link :to="'/user/favors'" class="link-item"><div class="link-item-title">收藏</div></router-link>
-        <router-link :to="'/user/action'" class="link-item"><div class="link-item-title">动态</div></router-link>
+        <router-link :to="'/user/articles'" class="link-item">
+          <el-link icon="el-icon-notebook-2" type="info">文章</el-link>
+        </router-link>
+        <router-link :to="'/user/likes'" class="link-item">
+          <el-link icon="el-icon-date" type="info">日历</el-link>
+        </router-link>
+        <router-link :to="'/user/favors'" class="link-item">
+          <el-link icon="el-icon-collection" type="info">收藏</el-link>
+        </router-link>
+        <router-link :to="'/user/action'" class="link-item">
+          <el-link icon="el-icon-s-marketing" type="info">星座</el-link>
+        </router-link>
       </div>
     </div>   
     <div class="list-body">
@@ -50,9 +58,9 @@ export default {
   width: 7rem;
   height: 100%;
 }
-.link-item-title {
-  font-size: 1.2rem;
+.el-link {
+  font-size: 1.1rem;
   font-weight: 400;
-  color: #31445b;
+  /* color: #31445b; */
 }
 </style>

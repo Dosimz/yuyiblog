@@ -14,52 +14,66 @@
         <aside class="index-aside">
           <el-card class="box-card">
               <div slot="header" class="clearfix">
-                <span style="font-weight: bold; font-size: 1.4rem;">👩‍💻个人成就</span>
+                <span style="font-weight: bold; font-size: 1.4rem;">👩‍💻站内信息</span>
               </div>
               <div class="box-row">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-dianzan"></use>
                 </svg>
-                <span class="box-card-content" style="font-size: 1.2rem;">获得点赞  0</span>
+                <span class="box-card-content" style="font-size: 1.2rem;">喜欢的文章  {{userrestinfo.like_articles | ArrayLength}}</span>
               </div>
               <div class="box-row">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-baogao"></use>
                 </svg>
-                <span class="box-card-content" style="font-size: 1.2rem;">文章被阅读  0</span>
+                <span class="box-card-content" style="font-size: 1.2rem;">文章被阅读  {{userrestinfo.article_viewed}}</span>
               </div>
               <div class="box-row">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-dingwei"></use>
                 </svg>
-                <span class="box-card-content" style="font-size: 1.2rem;">地球</span>
+                <span class="box-card-content" style="font-size: 1.2rem;">发布的文章 {{userrestinfo.my_article | ArrayLength}}</span>
               </div>
             </el-card>
            <el-card class="box-card">
             <div class="box-card-onerow">
-              <a class="pointer-box" href="">
-                <div>关注了</div>
-                <div>0</div>
-              </a>
+              <div class="pointer-box" href="">
+                <el-popover
+                  placement="top-start"
+                  title="QQ"
+                  width="70"
+                  trigger="hover">
+                  <!-- <el-image :src="">
+                  </el-image> -->
+                  <img src="../../assets/myqq.jpeg"  alt="">
+                  <el-button slot="reference">QQ</el-button>
+                </el-popover>
+              </div>
               <el-divider direction="vertical"></el-divider>
-              <a class="pointer-box" href="">
-                <div>关注者</div>
-                <div>0</div>
-                </a>
+              <div class="pointer-box" href="">
+                <el-popover
+                  placement="top-start"
+                  title="标题"
+                  width="70"
+                  trigger="hover">
+                  <img src="../../assets/mywechat.jpeg"  alt="">
+                  <el-button slot="reference">微信</el-button>
+                </el-popover>
+                </div>
             </div>
           </el-card>
           <div class="more-block">
-            <a href="" class="more-item">
+            <!-- <a href="" class="more-item">
               <div class="more-item-title">收藏集</div>
               <div class="more-item-count">0</div>
             </a>
             <a href="" class="more-item">
               <div class="more-item-title">关注标签</div>
               <div class="more-item-count">0</div>
-            </a>
+            </a> -->
             <a href="" class="more-item">
               <div class="more-item-title">加入于</div>
-              <div class="more-item-count">0000</div>
+              <div class="more-item-count">{{userrestinfo.date_joined | timeFormat}}</div>
             </a>
           </div>
         </aside>
@@ -70,16 +84,58 @@
 
 <script>
 import Yboard from '@/components/page/Yboard';
-import Major from '@/components/userpage/Major'
+import Major from '@/components/userpage/Major';
 // import Scrollboard from '@/components/page/Scrollboard';
+import user from '@/api/user';
+import axios from 'axios'
 
 export default {
   name: 'Userhome',
   components: {
       Yboard,
       Major,
+  },
+  data(){
+    return {
+      userrestinfo: '',
+    }
+  },
+  filters:{
+    ArrayLength:function(arrayValue){
+      return arrayValue.length
+    },
+    timeFormat:function(joined_time){
+        let datetime = new Date(joined_time);
+        let year = datetime.getFullYear();
+        let month = datetime.getMonth();
+        let date = datetime.getDate();
+        let hour = datetime.getHours();
+        let minute = datetime.getMinutes();
+        let second = datetime.getSeconds();
+        let result1 = year + 
+                    '-' + 
+                    ((month + 1) >= 10 ? (month + 1) : '0' + (month + 1)) + 
+                    '-' + 
+                    ((date + 1) < 10 ? '0' + date : date) + 
+                    ' ' + 
+                    ((hour + 1) < 10 ? '0' + hour : hour) +
+                    ':' + 
+                    ((minute + 1) < 10 ? '0' + minute : minute) + 
+                    ':' + 
+                    ((second + 1) < 10 ? '0' + second : second);
+        return result1
+      
+    }
+  },
+  mounted() {
+    user.retrieuserinfo().then(res => {
+      // console.log(res)
+      this.userrestinfo = res;
+      this.$store.state.user_article_info = res;
+    })
   }
 }
+
 </script>
 
 <style scoped>
@@ -199,5 +255,9 @@ export default {
 }
 .more-item-title {
   margin-right: auto;
+  font-size: 1rem;  
+}
+.more-item-count {
+  font-size: 1rem;
 }
 </style>

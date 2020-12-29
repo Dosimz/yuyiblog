@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <!-- <MainHeader></MainHeader> -->
-    <router-view/>
+    <!-- 组件刷新 -->
+    <router-view v-if="isRouterAlive"></router-view>
+    <!-- <router-view/> -->
   </div>
 </template>
 
@@ -10,6 +11,24 @@
 import axios from 'axios'
 export default {
   name: 'App',
+  provide (){
+    return {
+      reload: this.reload
+    }
+  },
+  data (){
+    return {
+      isRouterAlive: true
+    }
+  },
+  methods: {
+    reload(){
+      this.isRouterAlive = false
+      this.$nextTick(function(){
+        this.isRouterAlive = true
+      })
+    }
+  },
   components: {
     // MainHeader
   },

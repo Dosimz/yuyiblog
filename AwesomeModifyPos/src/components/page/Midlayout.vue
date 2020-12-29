@@ -7,6 +7,8 @@
           <li class="nav-item"><a href="">标签</a></li>
         </ul>
       </nav> -->
+    <transition name="fade">
+      <loading v-if="this.$store.state.page_loading"></loading>
       <div class="timeline-container">
         <div class="timeline-list">
           <Scrollboard></Scrollboard>
@@ -23,11 +25,13 @@
           </el-col>
         </el-row> -->
       </div>
+    </transition>
     </div>
   </div>
 </template>
 
 <script>
+import Loading from '@/components/loading';
 import Yboard from '@/components/page/Yboard';
 import Scrollboard from '@/components/page/Scrollboard';
 
@@ -35,7 +39,20 @@ export default {
   name: 'Midlayout',
   components: {
       Yboard,
-      Scrollboard
+      Scrollboard,
+      Loading,
+  },
+  data() {
+    return {
+      // isLoading: true
+    }
+  },
+  
+  mounted(){
+    // if (this.$store.state.page_loading==false) {
+    //   this.isLoading = this.$store.state.page_loading
+    // }
+    // console.log(this.$store.state.page_loading)
   }
 }
 </script>

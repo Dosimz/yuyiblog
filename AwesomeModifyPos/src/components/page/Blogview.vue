@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-backtop></el-backtop>   
     <div class="main-container">
       <div class="view-container">
       <!-- <nav class="view-nav">
@@ -9,38 +10,28 @@
         </ul>
       </nav> -->
         <div class="timeline-container">
-          <div class="timeline-list">
+          <div class="timeline-list-duplication">
             <el-card id="blog">
-              <el-link :underline="false" @click="back()"><i class="el-icon-back">Back</i></el-link>
-              
-              <!-- 为了blogId值改变事件会被watch到 -->
-              <!-- <p style="display: none">{{blogId = this.$route.params.blogId}}</p> -->
-              <!-- 放 retrun 里面不香吗？ -->
-
+              <el-page-header @back="goBack" content="详情页面"></el-page-header>
               <div id="article-title">
                 <h2 style="text-align: center">{{blog.title}}</h2>
               </div>
               <div style="text-align: center">
                 <p>
                   <span class="el-icon-time hidden-xs-only">&nbsp;{{blog.modified_time | formatDate}}</span>
-
                   <span class="el-icon-view hidden-xs-only" style="margin-left: 100px">&nbsp;{{blog.views}}</span>
-
-                  <span class="el-icon-chat-line-square hidden-xs-only" style="margin-left: 100px">&nbsp;评论（开发中...）</span>
-                  <span class="el-icon-user-solid hidden-xs-only" style="margin-left: 150px">&nbsp;{{author}}</span>
+                  <span class="el-icon-chat-line-square hidden-xs-only" style="margin-left: 100px">&nbsp;{{blog.review_num}}</span>
+                  <span class="el-icon-user-solid hidden-xs-only" style="margin-left: 150px">&nbsp;{{blog.author}}</span>
                 </p>
-                <!-- <p>
+              </div>
+              <mavon-editor v-model="body" id="editor" :toolbarsFlag="false" :subfield="false" defaultOpen="preview" />
+                <p>
                   <span>
-                    <span v-for="tag in catchTagName(tags)">
-                      <el-tag type="success" style="margin-left: 5px">标签</el-tag>
+                    <span v-for="(tag, index) in blog.tags" :key="index">
+                      <el-tag type="info" style="margin-left: 5px">{{tag.name}}</el-tag>
                     </span>
                   </span>
-                </p> -->
-              </div>
-
-
-              <!-- <mavon-editor v-model="body" id="editor" :toolbarsFlag="false" :subfield="false" defaultOpen="preview"></mavon-editor> -->
-              <mavon-editor v-model="body" id="editor" :toolbarsFlag="false" :subfield="false" defaultOpen="preview" />
+                </p>
               <!-- 以下是预览模式配置 -->
               <!-- v-model="body" -->
               <!--:toolbarsFlag="false"  :subfield="false" defaultOpen="preview"-->
@@ -57,25 +48,79 @@
               <el-divider/>
               
 
-              <div id="discuss" class="hidden-xs-only">
 
-                <!-- <div style="width: 50%;margin-left: 2.5%;padding-top: 2%" v-if="getStoreName()!=''">
-                  <el-input v-model="discussBody" placeholder="请输入评论内容" style="width: 40%" size="mini"></el-input>
-                  <el-button type="primary" style="width: 10%" size="mini" @click="sendDiscuss">评论</el-button>
-                </div> -->
 
-                <!-- 评论部分 -->
-            
+                <!-- <div style="width: 50%;margin-left: 2.5%;padding-top: 2%" v-if="getStoreName()!=''"> -->
+              <div class="comment-input" style="width: 100%; background-color:#fafbfc;" @mouseleave="dispearbtn">
+                <el-avatar :src="this.$store.state.user.avatar"></el-avatar> 
+                <div class="form-box">
+                  <!-- <el-input style="margin-left: 1rem; width: 97%" v-model="comment_input_value" @focus="showbtn" @blur="dispearbtn" ref="saveInputFocus" placeholder="请输入评论内容" ></el-input> -->
+                  <el-input style="margin-left: 1rem; width: 97%" v-model="comment_input_value" @focus="showbtn" ref="saveInputFocus" placeholder="请输入评论内容" ></el-input>
+                  <!-- <div class="input-action-box" @mouseenter="holdonfocus" v-show="submitinputbtn"> -->
+                  <div class="input-action-box" v-show="submitinputbtn">
+                    <span>表情</span>
+                    <el-button id="elrightbtn" @click="newcomment">提交</el-button>
+                  </div>
+                </div>
+
+                <!-- <el-button type="primary" style="width: 10%" size="mini" @click="sendDiscuss">评论</el-button> -->
+              </div>
+                <!-- <h2>ssssss</h2> -->            
                   <!-- 评论下的回复部分 -->
                 
-              </div>
+            </el-card>
+            <!-- 评论部分 -->
+            <el-card class="eltwo">
+              <div :key="index" v-for="(review, index) in comments" id="commentsList" class="comment-box comment-divider-line">
+                  <!-- <p style="margin: -5px " @mouseenter="pEnter()" @mouseleave="pLeave()"> -->
+                <el-avatar :src="'http://127.0.0.1:8000/media/' + review.reviewer.avatar"></el-avatar>
+                <div class="comment-content-box">
+                  <div class="comment-meta-box">
+                    <span>{{ review.reviewer.name }}</span>
+                  </div>
+                    <!-- <el-button type="text">{{review.reviewer.name}}&nbsp;&nbsp;:</el-button> -->
+                  <div class="comment-content-content">{{review.content}}</div>
+                  <div class="reply-stat">
+                    <div class="timestramp">{{review.created_time | formatDate}}</div>
+                    <div class="reply-delete">删除</div>
+                    <div class="reply-action-box">
+                      <div class="reply-like re-action">
+                        <svg class="icon comment-like" aria-hidden="true">
+                          <use xlink:href="#icon-ziyuan"></use>
+                        </svg>
+                      </div>
+                      <div class="reply-reply re-action">
+                        <i class="el-icon-chat-dot-square"></i>
+                        <span>回复</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="sub-comment-list"></div> -->
+                </div>
+                    <!-- <span style="color: #909399;margin-left: 50px" class="el-icon-time">{{getTime(review.time)}}</span> -->
+                    <!-- <el-button type="text" style="margin-left: 5%"
+                              v-if="(review.user.name==this.$store.store.user.name||this.$store.state.user.is_superuser==true)"
+                              @click="deleteDiscuss(review.id)">删除
+                    </el-button> -->
+                    <!-- <el-button type="text" style="margin-left: 1%" @click="sendReply(discuss.id,null)"
+                              v-if="getStoreName()!=''&&replyFlag">回复
+                    </el-button> -->
+                    <!-- <h2>sssssssssss</h2> -->
+                  <!-- </p> -->
+                </div>
             </el-card>
           </div>
           <aside class="index-aside">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                    <span>🗂标签集</span>
+                    <span>
+                      <svg class="icon icon-trans3" aria-hidden="true">
+                        <use xlink:href="#icon-resou"></use>
+                      </svg>
+                      数据来自第三方网站
+                    </span>
                     <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                    <iframe src="http://isoyu.com/?a=code&type=top" frameborder="0" scrolling="no" width="190" height="300"></iframe>
                     </div>
                     <!-- <div v-for="o in 4" :key="o" class="text item">
                     {{'列表内容 ' + o }}
@@ -83,8 +128,15 @@
                 </el-card>
                     <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                    <span>🗂标签集</span>
+                    <span>
+                      <svg class="icon icon-trans3" aria-hidden="true">
+                        <use xlink:href="#icon-zuifan"></use>
+                      </svg>
+                      数据来自官方媒体
+                    </span>
                     <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                    <iframe src="https://api.isoyu.com/gy/tj.html" frameborder="0" scrolling="no" width="200" height="500"></iframe>
+                    <!-- <iframe src="https://api.isoyu.com/gy/tj.html" allowTransparency="true"  frameborder="0" scrolling="no" width="100%" height="100%"></iframe> -->
                     </div>
                     <!-- <div v-for="o in 4" :key="o" class="text item">
                     {{'列表内容 ' + o }}
@@ -92,29 +144,36 @@
                 </el-card>
                     <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                    <span>🗂标签集</span>
+                    <span>
+                      <svg class="icon icon-trans3" aria-hidden="true">
+                        <use xlink:href="#icon-ertongshouyang"></use>
+                      </svg>
+                      失踪儿童信息
+                    </span>
                     <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                    <iframe src="https://api.isoyu.com/gy/" frameborder="0" scrolling="no" width="200" height="400"></iframe>
                     </div>
                     <!-- <div v-for="o in 4" :key="o" class="text item">
                     {{'列表内容 ' + o }}
                     </div> -->
+                    <!-- <el-button @click="deleteheart">点</el-button> -->
                 </el-card>
           </aside>
         </div>
       </div>
     </div>
     <div class="article-suspend-panel">
-      <div v-if='hasFavor' @click="deleteheart" class="like-btn panel-btn" >
+      <a v-if='hasFavor' @click="deleteheart" class="like-btn panel-btn" >
         <svg class="icon icon-trans" aria-hidden="true">
           <use xlink:href="#icon-xihuan2-copy"></use>
-        </svg>已
-      </div>
-      <div v-else @click="addheart" class="like-btn panel-btn" >
+        </svg>
+      </a>
+      <a v-else @click="addheart" class="like-btn panel-btn" >
         <svg class="icon icon-trans" aria-hidden="true">
           <use xlink:href="#icon-xihuan2"></use>
-        </svg>未
-      </div>
-    </div>   
+        </svg>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -122,10 +181,10 @@
 import axios from 'axios'
 import user from '@/api/user'
 import { mavonEditor } from 'mavon-editor'
-
-
+// import func from '../../../vue-temp/vue-editor-bridge'
 
 export default {
+  inject: ['reload'],
   name: "Blogview",
   components: {
     mavonEditor
@@ -135,10 +194,21 @@ export default {
       id: this.$route.params.blogId,
       blog: {},
       body: '',
-      author: '',
+      // author: '',
       hasFavor: false,
+      comments: '',
+      comment_input_value: '',
+      submitinputbtn: false,
+      // avatar_url: '',
    }
   },
+  // computed: {
+  //   bondurl: function() {
+  //     basicurl = 'http://127.0.0.1:8000/media'
+  //     avatar_url = basicurl + review.reviewer.avatar
+  //     return avatar_url
+  //   }
+  // },
   filters: {
       // 自定义过滤器
      formatDate: function(value){
@@ -160,39 +230,98 @@ export default {
     },
     created(){
       let that = this
-      axios.get('http://127.0.0.1:8000/api/v1/blog/' + that.id).then(function(data){
-        // console.log(data.data.title);
+      axios.get('http://127.0.0.1:8000/blogs/' + that.id).then(function(data){
         that.blog = data.data
-        that.author = data.data.author.username
         that.body = data.data.body
       });
-      if (this.$store.state.token) {
-        user.getFavor(this.id).then(response => {
-          // console.log(response.id)
-            this.hasFavor = true
-        });
-      }
+
+      // if (that.$store.state.token) {
+      //   user.getFavor(that.id).then(response => {
+      //     console.log(response.id)
+      //       thats.hasFavor = true
+      //   });
+      // }
     },
     methods: {
+      goBack() {
+        history.back()
+        console.log('go back');
+      },
       deleteheart() {
         this.hasFavor = false
+        console.log(this.hasFavor)
         user.delFavor(this.id).then((response)=> {
         });
       },
       addheart() {
         this.hasFavor = true
+        // this.hasFavor = this.hasFavor ? false : true;
+        console.log(this.hasFavor)
         user.addFavor(this.id).then((response)=> {
         });
       },
+      newcomment(){
+        user.newreviews(this.comment_input_value, this.id).then(response => {
+          this.$message({
+            message: '评论成功',
+            type: 'success'
+          });
+
+          // location.reload() 我觉得不行
+          this.reload()
+        })
+      },
+      showbtn() {
+        this.submitinputbtn = true
+        // console.log('我做出了一些改变true')
+      },
+      dispearbtn(){
+        this.submitinputbtn = false
+        this.$refs.saveInputFocus.$refs.input.blur();
+        // console.log('我做出了一些改变false')
+      },
+      // holdonfocus() {
+      //   this.$refs.saveInputFocus.$refs.input.focus();
+      //   console.log(this.$refs.saveInputFocus)
+      // },
+      tests() {
+        // console.log(this.$store.state.user)
+        // this.$refs.saveInputFocus.$refs.input.focus();
+        // console.log()
+        var myDate = new Date();
+        console.log(myDate.toLocaleDateString());
+        console.log(myDate.getFullYear());        
+        console.log(myDate.getMonth());
+        console.log(myDate.getDate());
+      }
       // deleteheart() {
       //   this.hasFavor = false
       // },
       // addheart() {
       //   this.hasFavor = true
       // },
-      back() {
-        history.back()
+      // back() {
+      //   history.back()
+      // }
+    },
+    mounted(){
+      let _this = this
+      user.listreview().then(response => {
+        let article_filter = response.filter((currentValue) => {
+          return currentValue.article == _this.id;
+          })
+          console.log( article_filter)
+          this.comments =  article_filter
+          });
+      
+      if (this.$store.state.token) {
+        user.getFavor(this.id).then(response => {
+          console.log(response.id)
+          this.hasFavor = true
+        });
       }
+
+
     }
 }
 </script>
@@ -227,12 +356,12 @@ h2 {
 }
 
 /* list-view */
-.timeline-list {
+.timeline-list-duplication {
   /* margin-right: 21.667rem; */
   border-radius: 2px;
   /* width: 700px; */
   max-width: 820px;
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
 
@@ -264,5 +393,108 @@ h2 {
 }
 .like-btn {
   cursor: pointer;
+}
+.eltwo {
+  margin-top: 4rem;
+}
+
+.comment-box {
+  display: flex;
+}
+.comment-content-box {
+  margin-left: .9rem;
+  flex: 1 1 auto;
+}
+.comment-meta-box {
+  display: flex;
+  align-items: center;
+  font-size: .8rem;
+  line-height: 1.1;
+  white-space: nowrap;
+  color: #333;
+}
+.comment-content-content {
+  margin-top: .44rem;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: #505050;
+}
+
+.reply-stat {
+  display: flex;
+  margin: .9rem 0;
+  font-weight: 300;
+}
+.timestramp {
+  font-size: .9rem;
+  color: #8a9aa9;
+  cursor: default;
+}
+.reply-delete {
+  font-size: .95rem;
+  color: #8a9aa9;
+  cursor: pointer;
+}
+.reply-action-box {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  margin-left: auto;
+  min-width: 7.8rem;
+  color: #8a93a0;
+  user-select: none;
+}
+.comment-like {
+  font-size: 1.4rem;
+}
+.re-action {
+  display: flex;
+  align-items: center;
+  margin-left: .5rem;
+  cursor: pointer;
+}
+
+.reply-delete {
+  margin-left: 4rem;
+}
+.comment-divider-line {
+  margin-right: auto;
+  margin-left: auto;
+  width: 84%;
+  margin-top: 1rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+/* .sub-comment-list {
+  margin: 1rem 0;
+  padding: 0 0 0 5rem;
+  background-color: black;
+  border-radius: 3px;
+} */
+.comment-input {
+  display: flex;
+  position: relative;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+}
+.input-action-box {
+  display: flex;
+  align-items: center;
+  margin: .55rem 0 0;
+  margin-left: 1rem; 
+  width: 97%
+}
+.form-box {
+  flex: 1 1 auto;
+  position: relative;
+  /* z-index: 100; */
+}
+#elrightbtn {
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding: .4rem .9rem;
 }
 </style>

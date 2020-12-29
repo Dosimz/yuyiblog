@@ -1,90 +1,28 @@
 <template>
-    <div>
-        <el-button type="text" @click="dialogFormVisible=true" class="header-nav-item">登录</el-button>
-    <div v-show="sign_in">
-        <el-dialog :visible.sync="dialogFormVisible" width="20%" :modal="false" id="disableMouseDiv">
-
-            <div slot="title" class="dialog-title">
-                <span>登录</span>
-            </div>
-            <el-form id="center-form" :model="form">
-            <el-form-item id="center-item">
-                <el-input v-model="form.name" autocomplete="off" placeholder="请输入手机号"></el-input>
-                <!-- <el-input v-model="form.name" autocomplete="off" placeholder="请输入密码"></el-input> -->
-            </el-form-item>
-            <el-form-item id="center-item">
-                <el-input v-model="form.name" autocomplete="off" placeholder="请输入密码"></el-input>
-            </el-form-item>
-            <el-form-item id="center-item">
-                <el-button id="center-login" type="primary" >登录</el-button>
-                <span>没有账号？<span id="signin" @click="in_turn_up">注册</span></span> 
-                <a id="pwdforget" href="">忘记密码</a>
-            </el-form-item>
-            </el-form>
-            <div class="oauth-box">
-                <div class="hint">第三方账号登录：</div>
-                <div class="oauth">
-                    <div class="oauth-bg">
-                        <i class="el-icon-edit"></i>
-                    </div>
-                    <div class="oauth-bg">
-                        <i class="el-icon-edit"></i>
-                    </div>
-                    <div class="oauth-bg">
-                        <i class="el-icon-edit"></i>
-                    </div>
-                </div>
-            </div>
-            <div slot="footer">
-                <span class="hint-foot">本网站承诺不遵循任何隐私政策</span>
-            <!-- <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
-            </div>
-        </el-dialog>
-        </div>
-    <div v-show="sign_up">
-        <el-dialog :visible.sync="dialogFormVisible" width="20%" :modal="false" id="disableMouseDiv" >
-            <div slot="title" class="dialog-title">
-                <span>注册</span>
-            </div>
-            <el-form id="center-form" :model="form">
-            <el-form-item id="center-item">
-                <el-input v-model="form.name" autocomplete="off" placeholder="请输入用户名"></el-input>
-            </el-form-item>
-            <el-form-item id="center-item">
-                <el-input v-model="form.name" autocomplete="off" placeholder="请输入手机号"></el-input>
-                <!-- <el-input v-model="form.name" autocomplete="off" placeholder="请输入密码"></el-input> -->
-            </el-form-item>
-            <el-form-item id="center-item">
-                <el-input v-model="form.name" autocomplete="off" placeholder="请输入密码"></el-input>
-            </el-form-item>
-            <el-form-item id="center-item">
-                <el-button id="center-login" type="primary" >注册</el-button>
-                <span id="signin" @click="in_turn_up">已有账号，去登录</span>
-            </el-form-item>
-            </el-form>
-
-            <div class="oauth-box">
-                <div class="hint">第三方账号登录：</div>
-                <div class="oauth">
-                    <div class="oauth-bg">
-                        <i class="el-icon-edit"></i>
-                    </div>
-                    <div class="oauth-bg">
-                        <i class="el-icon-edit"></i>
-                    </div>
-                    <div class="oauth-bg">
-                        <i class="el-icon-edit"></i>
-                    </div>
-                </div>
-            </div>
-            <div slot="footer">
-                <span class="hint-foot">本网站承诺不遵循任何隐私政策</span>
-            <!-- <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
-            </div>
-        </el-dialog>
-    </div>
+    <!-- <el-carousel height="200px" direction="vertical" :autoplay="true">
+      <el-carousel-item v-for="item in laohuangli" :key="item">
+        <span class="medium">{{ item }}</span>
+      </el-carousel-item>
+  </el-carousel> -->
+  <div class="block" style="text-align: center;">
+    <!-- <span class="demonstration">Click 指示器触发</span> -->
+    <!-- <el-carousel trigger="click" height="40px" indicator-position="outside">
+      <el-carousel-item v-for="item in laohuangli" :key="item">
+        <span class="small">{{ item }}</span>
+      </el-carousel-item>
+    </el-carousel> -->
+    
+    <el-upload
+      action="https://jsonplaceholder.typicode.com/posts/"
+      http-request=""
+      list-type="picture-card"
+      :on-preview="handlePictureCardPreview"
+      :on-remove="handleRemove">
+      <i class="el-icon-plus"></i>
+    </el-upload>
+    <el-dialog :visible.sync="dialogVisible">
+      <img width="100%" :src="dialogImageUrl" alt="">
+    </el-dialog>
   </div>
 </template>
 
@@ -92,83 +30,53 @@
 export default {
   data(){
       return {
-        dialogFormVisible: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-        sign_in: true,
-        sign_up: false,
-      };
-    },
-    methods: {
-      in_turn_up: function() {
-        if (this.sign_in) {
-          this.sign_in = false
-          this.sign_up = true
-        } else {
-          this.sign_in = true
-          this.sign_up = false
-        }
-    }
+        laohuangli: ["庚子(鼠)年三月十五", "白蜡金 建执位", "白蜡金 建执位", "庚不经络织机虚张 辰不哭泣必主重丧", "天恩 月恩 守日 玉宇 青龙", "月建 小时 土府 月刑", "祭祀 解除 教牛马 出行 馀事勿取", "动土 破土 行丧 开光 作梁 安葬 探病"],
+        dialogImageUrl: '',
+        dialogVisible: false
+    };
+  },
+  methods: {
+     handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+        console.log(this.dialogImageUrl)
+      }
   }
 }
 
 </script>
 
 <style>
-.dialog-title {
-  font-weight: 400;
-  font-size: 1.4rem;
-}
+.el-carousel__item span {
+    color: #475669;
+    font-size: 1rem;
+    opacity: 0.79;
+    /* line-height: 200px; */
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+  .el-carousel {
+    width: 20rem;
+    height: 40px;
+    text-align: center;
+    top: 100px;
+    /* margin-right: auto; */
+    /* margin-left: auto; */
+  }
 
-#center-form {
-  padding: 0px 24px;
-}
-#center-login {
-  width: 100%;
-}
-
-#signin {
-  color: #409EFF;
-  cursor: pointer;
-}
-#pwdforget {
-  float: right;
-  color: #409EFF;
-}
-
-.oauth-box {
-    padding: 0px 24px;
-    margin-top: -14px;
-}
-.oauth {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin-top: 15px;
-}
-.oauth-bg {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background-color: #f4f8fb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* span 标签字体颜色 */
-.hint {
-    color: #606266;
-}
-#f {
-  padding: 0;
+.block {
+  margin-right: auto;
+  margin-left: auto;
+  top: 100px;
 }
 </style>
