@@ -34,63 +34,63 @@ const router = new VueRouter({
           name: 'blog',
           component: Blogview
         },
-        {
-          path: 'user',
-          // name: 'userinfo',
-          component: Userhome,
-          children:[
-            {
-              path: '/',
-              name: 'userprofile',
-              component: Myarticle
-            },
-            {
-              path: 'articles',
-              name: 'myarticle',
-              component: Myarticle
-            },
-            {
-              path: 'likes',
-              name: 'mylike',
-              component: Mylike
-            },
-            {
-              path: 'favors',
-              name: 'myfavors',
-              component: Myfavors
-            },
-            {
-              path: 'action',
-              name: 'myaction',
-              component: Myaction
-            }
-          ],
-        }
+        // {
+        //   path: 'user',
+        //   // name: 'userinfo',
+        //   component: Userhome,
+        //   children:[
+        //     {
+        //       path: '/',
+        //       name: 'userprofile',
+        //       component: Myarticle
+        //     },
+        //     {
+        //       path: 'articles',
+        //       name: 'myarticle',
+        //       component: Myarticle
+        //     },
+        //     {
+        //       path: 'likes',
+        //       name: 'mylike',
+        //       component: Mylike
+        //     },
+        //     {
+        //       path: 'favors',
+        //       name: 'myfavors',
+        //       component: Myfavors
+        //     },
+        //     {
+        //       path: 'action',
+        //       name: 'myaction',
+        //       component: Myaction
+        //     }
+        //   ],
+        // }
       ]
     },
-    {
-      path: '/bbs',
-      name: 'bbs',
-      component: Bbsview
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: Testview
-    },
-    {
-      path: '/signup-resetpwd',
-      name: 'signorreset',
-      component: Signreset
-    },
-    {
-      path: '/edit',
-      name: 'edit',
-      component: Editblog,
-      // meta: {
-      //   roles: ['']
-      // }
-    },
+    // {
+    //   path: '/bbs',
+    //   name: 'bbs',
+    //   component: Bbsview
+    // },
+    // {
+    //   path: '/test',
+    //   name: 'test',
+    //   component: Testview
+    // },
+    // {
+    //   path: '/signup-resetpwd',
+    //   name: 'signorreset',
+    //   component: Signreset
+    // },
+    // {
+    //   path: '/edit',
+    //   name: 'edit',
+    //   component: Editblog,
+    //   // meta: {
+    //   //   roles: ['']
+    //   // }
+    // },
     {
       path: '/404', 
       name: 'Notfound',
@@ -109,16 +109,17 @@ const router = new VueRouter({
 
 
 
-router.beforeEach((to, from, next) => {
-  if (to.name === 'edit') {
-    if (localStorage.getItem('token')) {
-      next();
-    } else {
-      next({ name: 'Notfound' });
-    } 
-  } else {
-    next();
-  };
+// router.beforeEach((to, from, next) => {
+//   if (to.name === 'edit') {
+//     if (localStorage.getItem('token')) {
+//       next();
+//     } else {
+//       next({ name: 'Notfound' });
+//     } 
+//   } else {
+//     next();
+//   };
+  // nevermind --------------------
   // if (to.path === 'user') {
   //   if (localStorage.getItem('token')) {
   //     next();
@@ -127,6 +128,6 @@ router.beforeEach((to, from, next) => {
   //   } 
   // } else {
   //   next();
-  // }
-})
+  // } -----------------------------
+// })
 export default router

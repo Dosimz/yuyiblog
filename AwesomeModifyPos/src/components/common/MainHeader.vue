@@ -7,14 +7,15 @@
         <router-link class="logo" to="/"></router-link>
       </div>
     </transition> -->
-      <transition name="slide-fade">
+
+      <!-- <transition name="slide-fade">
       <header class="main-header" v-show="show">
       <div class="header-container">
             <nav class="header-nav">
               <ul class="header-nav-list">
                 <li class="header-nav-item"><a href="">首页</a></li>
                 <li class="header-nav-item"><a @click="bbs_href">留言板</a></li>
-                <!-- <li class="header-nav-item"><a href="">话题</a></li> -->
+                
                 <li class="header-nav-item egg">
                   <el-carousel trigger="click" height="40px" indicator-position="outside">
                     <el-carousel-item v-for="item in laohuangliInfos" :key="item">
@@ -26,13 +27,13 @@
 
                 <li class="header-nav-item add"><el-button type="info" v-if="this.$store.state.token" plain="" size="medium" @click.native="issue()" icon="el-icon-edit">写文章</el-button>
                 <el-divider direction="vertical"></el-divider>
-                </li>
+                </li> -->
 
-                <li v-if="this.$store.state.token" class="header-nav-item sign menu">
+                <!-- <li v-if="this.$store.state.token" class="header-nav-item sign menu">
                   <el-dropdown trigger="click">
-                    <!-- <span class="el-dropdown-link">
-                      下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
-                    </span> -->
+                                                  <span class="el-dropdown-link">
+                                                    下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+                                                  </span>
                     <el-avatar  class="el-dropdown-link" style="cursor: pointer" :size="40"  :src="url"></el-avatar>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item @click.native="myHome()" icon="el-icon-user-solid">我的主页</el-dropdown-item>
@@ -44,15 +45,15 @@
                       <el-dropdown-item @click.native="logout()" icon="el-icon-switch-button">登出</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
-                </li> 
+                </li>  -->
                 
                 
                 <!-- 登录和注册 -->
-                <li class="header-nav-item sign" v-if="this.$store.state.token==''">
+                <!-- <li class="header-nav-item sign" v-if="this.$store.state.token==''">
                   <el-button type="text" @click="dialogSignupFormVisible=true" style="margin-left: -2rem;" class="header-nav-item-button">注册</el-button>
                   <el-button type="text" @click="dialogLoginFormVisible=true"
                                             class="header-nav-item-button">登录</el-button>
-                    <!-- 登录弹窗 -->
+                    
                   <el-dialog title="登录" :visible.sync="dialogLoginFormVisible" 
                                             width="20%" :modal-append-to-body="false" id="disableMouseDiv">
                       <el-form id="center-form-in" :model="form">
@@ -88,7 +89,7 @@
                   </el-dialog>
                   
 
-                  <!-- 注册 -->
+                  
                   <el-dialog title="注册" :visible.sync="dialogSignupFormVisible" width="20%" :modal-append-to-body="false" id="disableMouseDiv" >
                     <el-form id="center-form-up" :model="form">
                     <el-form-item id="center-item">
@@ -110,31 +111,18 @@
                         <span id="signin" @click="turn">已有账号，去登录</span>
                     </el-form-item>
                     </el-form>
-                    <!-- <div class="oauth-box">
-                        <div class="hint">第三方账号登录：</div>
-                        <div class="oauth">
-                            <div class="oauth-bg">
-                                <i class="el-icon-edit"></i>
-                            </div>
-                            <div class="oauth-bg">
-                                <i class="el-icon-edit"></i>
-                            </div>
-                            <div class="oauth-bg">
-                                <i class="el-icon-edit"></i>
-                            </div>
-                        </div>
-                    </div> -->
+                    
                     <div slot="footer">
                         <span class="hint-foot">本网站承诺不遵循任何隐私政策</span>
                     </div>
                 </el-dialog>
               
-                </li>
-              </ul>
+                </li> -->
+              <!-- </ul>
             </nav>
       </div>
     </header>
-    </transition>
+    </transition> -->
   </div>
 
 </template>
@@ -175,14 +163,14 @@ export default {
     this.url = this.$store.state.user.avatar
     var _this = this
       // axios.get('/api/d?date=' + fromatResult + '&key=6dafce8786d51b9598c1127f1061a25c').then(function(res){
-      axios.get('http://127.0.0.1:8000/laohuangli/').then(function(response){
+      // axios.get('http://127.0.0.1:8000/laohuangli/').then(function(response){
       // console.log(res.data.HeWeather6[0])
-      console.log(response.data.result.yinli)
-      console.log(response.data.result.wuxing)
-      var laohuangliList = new Array('阴历：'+ response.data.result.yinli, '五行：' + response.data.result.wuxing, '冲煞：' + response.data.result.chongsha, '拜祭：' + response.data.result.baiji, '祭神：' + response.data.result.jishen, '凶神：' + response.data.result.xiongshen, '宜：' + response.data.result.yi, '忌：' + response.data.result.ji)
-      // console.log(laohuangliList)
-      _this.laohuangliInfos = laohuangliList
-    })
+      // console.log(response.data.result.yinli)
+      // console.log(response.data.result.wuxing)
+      // var laohuangliList = new Array('阴历：'+ response.data.result.yinli, '五行：' + response.data.result.wuxing, '冲煞：' + response.data.result.chongsha, '拜祭：' + response.data.result.baiji, '祭神：' + response.data.result.jishen, '凶神：' + response.data.result.xiongshen, '宜：' + response.data.result.yi, '忌：' + response.data.result.ji)
+      // // console.log(laohuangliList)
+      // _this.laohuangliInfos = laohuangliList
+    // })
   },
   computed:{
     laohuangliInfosMix:function(){

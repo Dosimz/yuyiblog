@@ -10,10 +10,10 @@
             <svg class="icon icon-trans4" aria-hidden="true">
               <use xlink:href="#icon-chengshi"></use>
             </svg>
-            <span>{{ infosbasic.admin_area }}</span>
-            <span>{{ infosbasic.parent_city }}</span>
+            <!-- <span>{{ infosbasic.admin_area }}</span> -->
+            <!-- <span>{{ infosbasic.parent_city }}</span> -->
           </div>
-          <div class="welcome-line">
+          <!-- <div class="welcome-line">
             <svg v-if="weathernow.cond_txt == '晴'" class="icon icon-trans5" aria-hidden="true">
               <use xlink:href="#icon-qingtian"></use>
             </svg>
@@ -23,25 +23,25 @@
             <svg v-if="weathernow.cond_txt == '多云'" class="icon icon-trans5" aria-hidden="true">
               <use xlink:href="#icon-duoyun"></use>
             </svg>
-            <span style="margin-right: 1.6rem;">{{ weathernow.cond_txt }}</span>
+            
             <svg class="icon icon-trans5" aria-hidden="true" style="margin-right: .5rem">
               <use xlink:href="#icon-wendu-sheshidu"></use>
             </svg>
-            <span>{{ weathernow.tmp }}℃</span>
+            
           </div>
           <div class="welcome-line">
             <svg class="icon icon-trans5" aria-hidden="true">
               <use xlink:href="#icon-feng"></use>
             </svg>
-            <span>{{ weathernow.wind_dir }}</span>
+            
           </div>
           <div class="welcome-line">
             <svg class="icon icon-trans5" aria-hidden="true">
               <use xlink:href="#icon-fengsu"></use>
             </svg>
             <span style="margin-right: 1.2rem;"><i style="color: #757575; margin-right: .5rem;">风速</i>{{ weathernow.wind_spd }}</span>
-            <span><i style="color: #757575; margin-right: .5rem;">等级</i>{{ weathernow.wind_sc }}</span>
-          </div>
+            
+          </div> -->
         </div>
     </el-card>
     <el-card class="box-card" >
@@ -106,15 +106,15 @@ export default {
     // _this.$store.commit('reloading')
 
     });
-    axios.get('https://free-api.heweather.net/s6/weather/now?location=auto_ip&key=0524de147edc467b86796cc558e3cbc7')
-                        .then(function(res){
-      // console.log(res.data.HeWeather6[0])
-      _this.someinfos = res.data.HeWeather6[0]
-      _this.infosbasic = res.data.HeWeather6[0].basic
-      _this.weathernow = res.data.HeWeather6[0].now
-      _this.loading = false
-      // _this.$store.commit('reloading')
-    })
+    // axios.get('https://free-api.heweather.net/s6/weather/now?location=auto_ip&key=0524de147edc467b86796cc558e3cbc7')
+    //                     .then(function(res){
+    //   // console.log(res.data.HeWeather6[0])
+    //   _this.someinfos = res.data.HeWeather6[0]
+    //   _this.infosbasic = res.data.HeWeather6[0].basic
+    //   _this.weathernow = res.data.HeWeather6[0].now
+    //   _this.loading = false
+    //   // _this.$store.commit('reloading')
+    // })
     
   },
 

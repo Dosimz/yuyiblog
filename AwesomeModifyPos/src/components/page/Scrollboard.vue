@@ -7,13 +7,13 @@
             <li>
               <!-- <div class="block"> -->
                 <!-- <span class="demonstration">无默认值</span> -->
-                <el-color-picker v-model="color2" size="small"></el-color-picker>
+                Search
               <!-- </div> -->
             </li>
             <el-divider direction="vertical"></el-divider>
             <li>
               <!-- <a href="">XX</a> -->
-              <el-color-picker v-model="color" size="small" show-alpha></el-color-picker>
+              post
             </li>
             <el-divider direction="vertical"></el-divider>
             <li><el-input placeholder="请输入内容" v-model="search" @focus="clearvalue" clearable></el-input></li>
@@ -35,7 +35,7 @@
                       </div>
                     </li>
                     <li class="meta-item"><a href="">{{blog.author}}</a></li>
-                    <li class="meta-item">{{ blog.modified_time | formatDate }}</li>
+                    <li class="meta-item">{{ blog.modified_time }}</li>
                     <li class="meta-item">                
                       <span v-for="(tag, i) in blog.tags" :key="i">
                       <svg class="icon icon-trans3" aria-hidden="true">
@@ -48,23 +48,29 @@
                 </div>
                 <div class="y-title"><a class="y-title_a">{{blog.title}}</a></div>
                 <div>
+                  <div class="post_image">
+                    <el-image :src="image_url"></el-image>
+                  </div>
+                  <p>{{ blog.body }}</p>
+                </div>
+                <div>
                   <ul class="y-title-action-list">
-                    <li>
+                    <!-- <li>
                       <div class="action-list-element">
                         <svg class="icon icon-trans4" aria-hidden="true">
                           <use xlink:href="#icon-xin"></use>
                         </svg>
                         <span class="meta-item">{{ blog.like_num }}</span>
                       </div>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                       <div class="action-list-element">
                         <svg class="icon icon-trans4" aria-hidden="true">
                           <use xlink:href="#icon-pinglun"></use>
                         </svg>
                         <span class="meta-item">{{ blog.review_num }}</span>
                       </div>
-                    </li>
+                    </li> -->
                     <li>
                       <div>
                         <svg class="icon icon-trans4" aria-hidden="true">
@@ -100,6 +106,8 @@ import axios from 'axios'
         search: '',
         // search: mid_value,
         // blogs:'',
+        image_url: '',
+        // post_time: '',
         blogId: '',
         color2: '',
         color: 'rgba(19, 206, 102, 0.8)',
@@ -107,29 +115,29 @@ import axios from 'axios'
     },
     filters: {
       // 自定义过滤器
-     formatDate: function(value){
-      var dateset = new Date(value);
-      var datenow = new Date();
-      var dateminus = datenow.getTime() - dateset.getTime()
-      var days = Math.floor(dateminus/(24*3600*1000))
+    //  formatDate: function(value){
+    //   var dateset = new Date(value);
+    //   var datenow = new Date();
+    //   var dateminus = datenow.getTime() - dateset.getTime()
+    //   var days = Math.floor(dateminus/(24*3600*1000))
 
-      var days_remainder = dateminus%(24*3600*1000)    // 计算天数后剩余的毫秒数
-      var hours = Math.floor(days_remainder/(3600*1000))
+    //   var days_remainder = dateminus%(24*3600*1000)    // 计算天数后剩余的毫秒数
+    //   var hours = Math.floor(days_remainder/(3600*1000))
 
-      var hours_remainder = days_remainder%(3600*1000)    // 计算小时后剩余的毫秒数
-      var mins = Math.floor(hours_remainder/(60*1000))
+    //   var hours_remainder = days_remainder%(3600*1000)    // 计算小时后剩余的毫秒数
+    //   var mins = Math.floor(hours_remainder/(60*1000))
 
-      var mins_remainder = hours_remainder%(60*1000)
-      var seconds = Math.round(mins_remainder/1000)
+    //   var mins_remainder = hours_remainder%(60*1000)
+    //   var seconds = Math.round(mins_remainder/1000)
       
-      if (days >= 1) {
-        return days + "天前"
-      } else if (hours >= 1) {
-        return hours + "小时前"
-      } else if (mins >= 1) {
-        return mins + "分钟前"
-      }
-     }
+    //   if (days >= 1) {
+    //     return days + "天前"
+    //   } else if (hours >= 1) {
+    //     return hours + "小时前"
+    //   } else if (mins >= 1) {
+    //     return mins + "分钟前"
+    //   }
+    //  }
     },
     methods: {
       clearvalue(){
@@ -190,9 +198,11 @@ import axios from 'axios'
     var _this = this;
     axios.get('http://127.0.0.1:8000/blogs').then(function(data){
     // axios.get('http://127.0.0.1:8000/api/v1/blog').then(function(data){
-    // console.log(data.data)
+    // console.log(data.data[0].image)
     _this.$store.state.allList = data.data;
     // _this.blogs = data.data
+    _this.image_url = data.data[0].image
+    _this.post_time = data.data[0].modified_time
     // console.log(_this.$store.state.allList)
     });
   }
@@ -201,7 +211,7 @@ import axios from 'axios'
 
 <style scoped>
 header {
-  /* background-color: #FFFFFF; */
+  background-color: #C5CAE9;
   /* margin: 20px 0; */
   /* padding: 1px; */
   /* padding: 1.3rem 1rem; */
@@ -313,6 +323,11 @@ header {
 }
 .action-list-element {
   margin-right: 3rem;
+}
+.post_image{
+  max-width: 50%;
+  height: auto;
+  margin: 0 auto;
 }
 
   /* .text {

@@ -18,9 +18,9 @@
               </div>
               <div style="text-align: center">
                 <p>
-                  <span class="el-icon-time hidden-xs-only">&nbsp;{{blog.modified_time | formatDate}}</span>
-                  <span class="el-icon-view hidden-xs-only" style="margin-left: 100px">&nbsp;{{blog.views}}</span>
-                  <span class="el-icon-chat-line-square hidden-xs-only" style="margin-left: 100px">&nbsp;{{blog.review_num}}</span>
+                  <!-- <span class="el-icon-time hidden-xs-only">&nbsp;{{blog.modified_time}}</span> -->
+                  <span class="el-icon-view hidden-xs-only">&nbsp;{{blog.views}}</span>
+                  <!-- <span class="el-icon-chat-line-square hidden-xs-only" style="margin-left: 100px">&nbsp;{{blog.review_num}}</span> -->
                   <span class="el-icon-user-solid hidden-xs-only" style="margin-left: 150px">&nbsp;{{blog.author}}</span>
                 </p>
               </div>
@@ -51,34 +51,28 @@
 
 
                 <!-- <div style="width: 50%;margin-left: 2.5%;padding-top: 2%" v-if="getStoreName()!=''"> -->
-              <div class="comment-input" style="width: 100%; background-color:#fafbfc;" @mouseleave="dispearbtn">
+              <!-- <div class="comment-input" style="width: 100%; background-color:#fafbfc;" @mouseleave="dispearbtn">
                 <el-avatar :src="this.$store.state.user.avatar"></el-avatar> 
-                <div class="form-box">
-                  <!-- <el-input style="margin-left: 1rem; width: 97%" v-model="comment_input_value" @focus="showbtn" @blur="dispearbtn" ref="saveInputFocus" placeholder="请输入评论内容" ></el-input> -->
-                  <el-input style="margin-left: 1rem; width: 97%" v-model="comment_input_value" @focus="showbtn" ref="saveInputFocus" placeholder="请输入评论内容" ></el-input>
-                  <!-- <div class="input-action-box" @mouseenter="holdonfocus" v-show="submitinputbtn"> -->
+                <div class="form-box">                  
+                  <el-input style="margin-left: 1rem; width: 97%" v-model="comment_input_value" @focus="showbtn" ref="saveInputFocus" placeholder="请输入评论内容" ></el-input>                  
                   <div class="input-action-box" v-show="submitinputbtn">
                     <span>表情</span>
                     <el-button id="elrightbtn" @click="newcomment">提交</el-button>
                   </div>
                 </div>
-
-                <!-- <el-button type="primary" style="width: 10%" size="mini" @click="sendDiscuss">评论</el-button> -->
-              </div>
+              </div> -->
                 <!-- <h2>ssssss</h2> -->            
                   <!-- 评论下的回复部分 -->
                 
             </el-card>
             <!-- 评论部分 -->
-            <el-card class="eltwo">
-              <div :key="index" v-for="(review, index) in comments" id="commentsList" class="comment-box comment-divider-line">
-                  <!-- <p style="margin: -5px " @mouseenter="pEnter()" @mouseleave="pLeave()"> -->
+            <!-- <el-card class="eltwo">
+              <div :key="index" v-for="(review, index) in comments" id="commentsList" class="comment-box comment-divider-line">                  
                 <el-avatar :src="'http://127.0.0.1:8000/media/' + review.reviewer.avatar"></el-avatar>
                 <div class="comment-content-box">
                   <div class="comment-meta-box">
                     <span>{{ review.reviewer.name }}</span>
-                  </div>
-                    <!-- <el-button type="text">{{review.reviewer.name}}&nbsp;&nbsp;:</el-button> -->
+                  </div>                   
                   <div class="comment-content-content">{{review.content}}</div>
                   <div class="reply-stat">
                     <div class="timestramp">{{review.created_time | formatDate}}</div>
@@ -94,21 +88,10 @@
                         <span>回复</span>
                       </div>
                     </div>
-                  </div>
-                  <!-- <div class="sub-comment-list"></div> -->
+                  </div>                
+                </div>                  
                 </div>
-                    <!-- <span style="color: #909399;margin-left: 50px" class="el-icon-time">{{getTime(review.time)}}</span> -->
-                    <!-- <el-button type="text" style="margin-left: 5%"
-                              v-if="(review.user.name==this.$store.store.user.name||this.$store.state.user.is_superuser==true)"
-                              @click="deleteDiscuss(review.id)">删除
-                    </el-button> -->
-                    <!-- <el-button type="text" style="margin-left: 1%" @click="sendReply(discuss.id,null)"
-                              v-if="getStoreName()!=''&&replyFlag">回复
-                    </el-button> -->
-                    <!-- <h2>sssssssssss</h2> -->
-                  <!-- </p> -->
-                </div>
-            </el-card>
+            </el-card> -->
           </div>
           <aside class="index-aside">
                 <el-card class="box-card">
@@ -162,7 +145,7 @@
         </div>
       </div>
     </div>
-    <div class="article-suspend-panel">
+    <!-- <div class="article-suspend-panel">
       <a v-if='hasFavor' @click="deleteheart" class="like-btn panel-btn" >
         <svg class="icon icon-trans" aria-hidden="true">
           <use xlink:href="#icon-xihuan2-copy"></use>
@@ -173,7 +156,7 @@
           <use xlink:href="#icon-xihuan2"></use>
         </svg>
       </a>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -233,6 +216,7 @@ export default {
       axios.get('http://127.0.0.1:8000/blogs/' + that.id).then(function(data){
         that.blog = data.data
         that.body = data.data.body
+        // that.mtime = data.d
       });
 
       // if (that.$store.state.token) {
