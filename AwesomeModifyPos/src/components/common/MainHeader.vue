@@ -1,5 +1,5 @@
 <template>
-    <div class="main-header-box">
+    <div class="main-header-box">s
     
     <!-- <transition name="slide-fade">
       <div id="mobile-bar" v-show="show" >
@@ -128,8 +128,8 @@
 </template>
 
 <script>
-import user from '@/api/user'
-import axios from 'axios'
+// import user from '@/api/user'
+// import axios from 'axsios'
 import qs from 'qs'
 
 export default {
@@ -160,8 +160,8 @@ export default {
     }
   },
   created () {
-    this.url = this.$store.state.user.avatar
-    var _this = this
+    // this.url = this.$store.state.user.avatar
+    // var _this = this
       // axios.get('/api/d?date=' + fromatResult + '&key=6dafce8786d51b9598c1127f1061a25c').then(function(res){
       // axios.get('http://127.0.0.1:8000/laohuangli/').then(function(response){
       // console.log(res.data.HeWeather6[0])

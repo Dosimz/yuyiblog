@@ -3,23 +3,23 @@
     <!-- <div class="Awesome">
       <h1>Shall we began?</h1>
     </div> -->
-    <MainHeader></MainHeader>
-    <router-view></router-view>
-    <!-- <Midlayout></Midlayout> -->
+    <!-- <MainHeader></MainHeader> -->
+    <!-- <router-view></router-view> -->
+    <Midlayout></Midlayout>
   </div>
 </template>
 
 <script>
-import MainHeader from '@/components/common/MainHeader'
+// import MainHeader from '@/components/common/MainHeader'
 import Midlayout from '@/components/page/Midlayout'
 // import Userhome from '@/components/userpage/Userhome'
 import axios from 'axios'
 export default {
   name: 'Awesome',
   components: {
-    MainHeader,
+    // MainHeader,
     Midlayout,
-    Userhome,
+    // Userhome,
   },
   //   mounted(){
   //   var _this = this;

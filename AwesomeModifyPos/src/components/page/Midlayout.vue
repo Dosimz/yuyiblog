@@ -7,8 +7,8 @@
           <li class="nav-item"><a href="">标签</a></li>
         </ul>
       </nav> -->
-    <!-- <transition name="fade">
-      <loading v-if="this.$store.state.page_loading"></loading>
+    <!-- <transition name="fade"> -->
+      <!-- <loading v-if="this.$store.state.page_loading"></loading> -->
       <div class="timeline-container">
         <div class="timeline-list">
           <Scrollboard></Scrollboard>
@@ -17,8 +17,8 @@
           <Yboard></Yboard>
         </aside>
       </div>
-    </transition>
-                    -->
+    <!-- </transition> -->
+                   
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
   components: {
       Yboard,
       Scrollboard,
-      Loading,
+      // Loading,
   },
   data() {
     return {

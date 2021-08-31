@@ -24,7 +24,7 @@ const router = new VueRouter({
       // name: 'Awesome',
       component: Awesome,
       children: [
-        {
+        { 
           path: '/',
           name: 'Home',
           component: Midlayout

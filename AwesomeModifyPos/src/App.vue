@@ -7,7 +7,7 @@
 </template>
 
 <script>
-// import MainHeader from '@/components/common/MainHeader'
+import MainHeader from '@/components/common/MainHeader'
 import axios from 'axios'
 export default {
   name: 'App',
@@ -30,7 +30,7 @@ export default {
     }
   },
   components: {
-    // MainHeader
+    MainHeader
   },
   // mounted(){
   //   var _this = this;
