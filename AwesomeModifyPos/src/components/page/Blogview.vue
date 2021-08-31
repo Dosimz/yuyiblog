@@ -213,7 +213,7 @@ export default {
     },
     created(){
       let that = this
-      axios.get('http://127.0.0.1:8000/blogs/' + that.id).then(function(data){
+      axios.get('http://127.0.0.1:19700/blogs/' + that.id).then(function(data){
         that.blog = data.data
         that.body = data.data.body
         // that.mtime = data.d

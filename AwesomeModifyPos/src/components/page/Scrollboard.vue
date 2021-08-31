@@ -196,7 +196,7 @@ import axios from 'axios'
     },
     mounted(){
     var _this = this;
-    axios.get('http://127.0.0.1:8000/blogs').then(function(data){
+    axios.get('http://127.0.0.1:19700/blogs').then(function(data){
     // axios.get('http://127.0.0.1:8000/api/v1/blog').then(function(data){
     // console.log(data.data[0].image)
     _this.$store.state.allList = data.data;

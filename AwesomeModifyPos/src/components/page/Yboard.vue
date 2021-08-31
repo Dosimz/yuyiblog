@@ -91,7 +91,7 @@ export default {
   mounted(){
     var _this = this;
     // axios.get('http://127.0.0.1:8000/blogs').then(function(data){
-    axios.get('http://127.0.0.1:8000/tags').then(function(data){
+    axios.get('http://127.0.0.1:19700/tags').then(function(data){
     // console.log(data.data)
     _this.tags = data.data;
     // _this.loading1 = false
@@ -100,7 +100,7 @@ export default {
     // _this.blogs = data.data
     // console.log(_this.$store.state.allList)
     });
-    axios.get('http://127.0.0.1:8000/blogs').then(function(data){
+    axios.get('http://127.0.0.1:19700/blogs').then(function(data){
     // console.log(data.data)
     _this.blogs = data.data;
     // _this.$store.commit('reloading')
