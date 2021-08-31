@@ -7,7 +7,7 @@
           <li class="nav-item"><a href="">标签</a></li>
         </ul>
       </nav> -->
-    <transition name="fade">
+    <!-- <transition name="fade">
       <loading v-if="this.$store.state.page_loading"></loading>
       <div class="timeline-container">
         <div class="timeline-list">
@@ -16,16 +16,9 @@
         <aside class="index-aside">
           <Yboard></Yboard>
         </aside>
-        <!-- <el-row>
-          <el-col :span="6">
-            <Yboard></Yboard>
-          </el-col>
-          <el-col :span="18">
-            <Scrollboard></Scrollboard>
-          </el-col>
-        </el-row> -->
       </div>
     </transition>
+                    -->
     </div>
   </div>
 </template>
