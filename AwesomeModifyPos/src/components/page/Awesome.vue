@@ -12,7 +12,7 @@
 <script>
 import MainHeader from '@/components/common/MainHeader'
 import Midlayout from '@/components/page/Midlayout'
-import Userhome from '@/components/userpage/Userhome'
+// import Userhome from '@/components/userpage/Userhome'
 import axios from 'axios'
 export default {
   name: 'Awesome',

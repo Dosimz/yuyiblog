@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Loading from '@/components/loading';
+// import Loading from '@/components/loading';
 import Yboard from '@/components/page/Yboard';
 import Scrollboard from '@/components/page/Scrollboard';
 
